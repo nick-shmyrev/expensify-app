@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpenseListItem component should render correctly 1`] = `
+<li>
+  Wed Dec 31 1969
+  : 
+  <Link
+    replace={false}
+    title="Edit Expense"
+    to="/edit/1234-abcd"
+  >
+    <b>
+      Expense to remove
+    </b>
+  </Link>
+  , $
+  0.13
+</li>
+`;

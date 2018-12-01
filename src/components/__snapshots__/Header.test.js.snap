@@ -21,13 +21,6 @@ exports[`Header component should render correctly 1`] = `
     >
       Create Expense
     </NavLink>
-    <NavLink
-      activeClassName="active"
-      aria-current="page"
-      to="/help"
-    >
-      Help Page
-    </NavLink>
   </nav>
 </header>
 `;

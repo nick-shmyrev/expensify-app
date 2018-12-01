@@ -1,13 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import toJSON from 'enzyme-to-json';
-import Header from './Header';
+import NotFoundPage from './NotFoundPage';
 
-describe('Header component', () => {
+describe('NotFoundPage component', () => {
   test('should render correctly', () => {
-    const wrapper = shallow(<Header/>);
-  
+    const wrapper = shallow(<NotFoundPage/>);
     expect(wrapper).toMatchSnapshot();
-  
   });
 });
