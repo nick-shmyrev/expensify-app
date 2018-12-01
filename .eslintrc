@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "strict": 0,
+    "no-trailing-spaces": [
+      "error",
+      {"skipBlankLines": true}
+    ],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "react/jsx-tag-spacing": false,
+    "react/jsx-filename-extension": false,
+    "jsx-a11y/anchor-is-valid": ["error", {"components": []}]
+  }
+}
