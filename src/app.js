@@ -9,7 +9,7 @@ import store from './store/redux-store';
 // Import store actions & selectors
 import { addExpense, editExpense, removeExpense } from './actions/expenses-actions';
 import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from './actions/filters-actions';
-import getVisibleExpenses from './store/selectors/expenses-selector';
+import { getVisibleExpenses } from './store/selectors/expenses-selectors';
 
 // Import styles
 import './styles/styles.scss';

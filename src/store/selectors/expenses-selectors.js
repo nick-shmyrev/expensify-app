@@ -22,4 +22,11 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
   return visibleExpenses;
 };
 
-export default getVisibleExpenses;
+// Get expenses total
+const getExpensesTotal = (expenses) => {
+  if (!Array.isArray(expenses) || expenses.length < 1) return 0;
+  
+  return expenses.reduce((a, c) => a + c.amount, 0);
+};
+
+export { getVisibleExpenses, getExpensesTotal };
