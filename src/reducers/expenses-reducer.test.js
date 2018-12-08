@@ -79,4 +79,10 @@ describe('Expenses reducer', () => {
     
     expect(state).toEqual(prevState);
   });
+  
+  test('should set expenses', () => {
+    const state = expensesReducer(defaultState, { type: 'SET_EXPENSES', expenses: prevState });
+    
+    expect(state).toEqual(prevState);
+  });
 });

@@ -30,4 +30,29 @@ const editExpense = (id, update) => ({
   update,
 });
 
-export { addExpense, startAddExpense, removeExpense, editExpense };
+const setExpenses = expenses => ({
+  type: 'SET_EXPENSES',
+  expenses,
+});
+
+const startSetExpenses = () => {
+  return (dispatch) => {
+    return db.ref('expenses')
+      .once('value')
+      .then((snap) => {
+        const dbExpenses = snap.val();
+        const expenses = Object.keys(dbExpenses || {}).map(id => ({
+          id,
+          description: dbExpenses[id].description,
+          amount: dbExpenses[id].amount,
+          note: dbExpenses[id].note,
+          createdAt: dbExpenses[id].createdAt,
+        }));
+        
+        dispatch(setExpenses(expenses));
+      })
+      .catch();
+  };
+};
+
+export { addExpense, startAddExpense, removeExpense, editExpense, setExpenses, startSetExpenses };
