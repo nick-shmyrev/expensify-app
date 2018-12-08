@@ -1,17 +1,25 @@
-import uuid from 'uuid/v4';
+import db from '../firebase/firebase';
 
-const addExpense = ({ description = '', note = '', amount = 0, createdAt = 0 } = {}) => ({
+const addExpense = expense => ({
   type: 'ADD_EXPENSE',
-  expense: {
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt,
-  },
+  expense,
 });
 
-const removeExpense = (id) => ({
+const startAddExpense = (expenseData = {}) => {
+  return (dispatch) => {
+    const { description = '', note = '', amount = 0, createdAt = 0 } = expenseData;
+    const expense = { description, note, amount, createdAt };
+  
+    return db.ref('expenses')
+      .push(expense)
+      .then((ref) => {
+        dispatch(addExpense({ id: ref.key, ...expense }));
+      })
+      .catch();
+  };
+};
+
+const removeExpense = id => ({
   type: 'REMOVE_EXPENSE',
   id,
 });
@@ -22,4 +30,4 @@ const editExpense = (id, update) => ({
   update,
 });
 
-export { addExpense, removeExpense, editExpense };
+export { addExpense, startAddExpense, removeExpense, editExpense };

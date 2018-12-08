@@ -3,14 +3,14 @@ import { shallow } from 'enzyme';
 import { AddExpensePage } from './AddExpensePage';
 
 describe('AddExpensePage component', () => {
-  let addExpense;
+  let startAddExpense;
   let history;
   let wrapper;
   
   beforeEach(() => {
-    addExpense = jest.fn();
+    startAddExpense = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<AddExpensePage addExpense={addExpense} history={history}/>);
+    wrapper = shallow(<AddExpensePage startAddExpense={startAddExpense} history={history}/>);
   });
   
   test('should render correctly', () => {
@@ -28,6 +28,6 @@ describe('AddExpensePage component', () => {
     wrapper.find('ExpenseForm').prop('onExpenseFormSubmit')(expense);
     
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(addExpense).toHaveBeenLastCalledWith(expense);
+    expect(startAddExpense).toHaveBeenLastCalledWith(expense);
   });
 });
