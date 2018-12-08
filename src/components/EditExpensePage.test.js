@@ -5,8 +5,8 @@ import { EditExpensePage } from './EditExpensePage';
 describe('EditExpensePage component', () => {
   let history;
   let wrapper;
-  let editExpense;
-  let removeExpense;
+  let startEditExpense;
+  let startRemoveExpense;
   const expense = {
     id: '023-abc',
     description: 'Description',
@@ -16,10 +16,10 @@ describe('EditExpensePage component', () => {
   };
   
   beforeEach(() => {
-    editExpense = jest.fn();
-    removeExpense = jest.fn();
+    startEditExpense = jest.fn();
+    startRemoveExpense = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<EditExpensePage expense={expense} editExpense={editExpense} removeExpense={removeExpense} history={history}/>);
+    wrapper = shallow(<EditExpensePage expense={expense} startEditExpense={startEditExpense} startRemoveExpense={startRemoveExpense} history={history}/>);
   });
   
   test('should render correctly', () => {
@@ -30,7 +30,7 @@ describe('EditExpensePage component', () => {
     wrapper.find('ExpenseForm').prop('onExpenseFormSubmit')(expense);
   
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(editExpense).toHaveBeenLastCalledWith(expense.id, expense);
+    expect(startEditExpense).toHaveBeenLastCalledWith(expense.id, expense);
   });
   
   test('should handle removeExpense', () => {
@@ -38,7 +38,7 @@ describe('EditExpensePage component', () => {
       preventDefault: () => {},
     });
     
-    expect(removeExpense).toHaveBeenLastCalledWith(expense.id);
+    expect(startRemoveExpense).toHaveBeenLastCalledWith(expense.id);
     expect(history.push).toHaveBeenLastCalledWith('/');
   });
 });
