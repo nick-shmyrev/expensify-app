@@ -27,7 +27,7 @@ describe('AddExpensePage component', () => {
     
     wrapper.find('ExpenseForm').prop('onExpenseFormSubmit')(expense);
     
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startAddExpense).toHaveBeenLastCalledWith(expense);
   });
 });

@@ -29,7 +29,7 @@ describe('EditExpensePage component', () => {
   test('should handle editExpense', () => {
     wrapper.find('ExpenseForm').prop('onExpenseFormSubmit')(expense);
   
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startEditExpense).toHaveBeenLastCalledWith(expense.id, expense);
   });
   
@@ -39,6 +39,6 @@ describe('EditExpensePage component', () => {
     });
     
     expect(startRemoveExpense).toHaveBeenLastCalledWith(expense.id);
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
   });
 });

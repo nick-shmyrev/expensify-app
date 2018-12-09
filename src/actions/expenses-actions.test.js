@@ -21,7 +21,7 @@ describe('Expenses Action Generators', () => {
       description: 'Expense to remove',
       note: 'With a note',
       amount: 13,
-      createdAt: 0,
+      createdAt: 23,
     },
     {
       id: 'ccd-42',
@@ -38,6 +38,7 @@ describe('Expenses Action Generators', () => {
       createdAt: 0,
     },
   ];
+  const uid = 'rand0mStrin9';
   
   // Generate expenses in the db before each test
   beforeEach((done) => {
@@ -46,7 +47,7 @@ describe('Expenses Action Generators', () => {
       return acc;
     }, {});
     
-    db.ref('expenses')
+    db.ref(`users/${uid}/expenses`)
       .set(expensesData)
       .then(() => done());
   });
@@ -64,7 +65,9 @@ describe('Expenses Action Generators', () => {
     });
     
     test('startAddExpense() should add expense to database and store', (done) => {
-      const store = createMockStore({});
+      const store = createMockStore({
+        auth: { uid },
+      });
       const expense = {
         description: 'description',
         amount: 350,
@@ -81,7 +84,7 @@ describe('Expenses Action Generators', () => {
             ...expense,
           },
         });
-        return db.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return db.ref(`users/${store.getState().auth.uid}/expenses/${actions[0].expense.id}`).once('value');
       }).then((snap) => {
         expect(snap.val()).toEqual(expense);
         done();
@@ -89,7 +92,9 @@ describe('Expenses Action Generators', () => {
     });
     
     test('should add expense with defaults to database and store', (done) => {
-      const store = createMockStore({});
+      const store = createMockStore({
+        auth: { uid },
+      });
       const defaultExpense = {
         description: '',
         note: '',
@@ -107,7 +112,7 @@ describe('Expenses Action Generators', () => {
             ...defaultExpense,
           },
         });
-        return db.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return db.ref(`users/${store.getState().auth.uid}/expenses/${actions[0].expense.id}`).once('value');
       }).then((snap) => {
         expect(snap.val()).toEqual(defaultExpense);
         done();
@@ -123,7 +128,10 @@ describe('Expenses Action Generators', () => {
     });
     
     test('startRemoveExpense() should remove expense from store and db', (done) => {
-      const store = createMockStore(expenses);
+      const store = createMockStore({
+        expenses,
+        auth: { uid },
+      });
       
       store.dispatch(startRemoveExpense(expenses[0].id)).then(() => {
         const actions = store.getActions();
@@ -133,7 +141,7 @@ describe('Expenses Action Generators', () => {
           id: expenses[0].id,
         });
         
-        return db.ref(`expenses/${expenses[0].id}`).once('value');
+        return db.ref(`users/${store.getState().auth.uid}/expenses/${expenses[0].id}`).once('value');
       }).then((snap) => {
         expect(snap.val()).toBeNull();
         done();
@@ -155,7 +163,10 @@ describe('Expenses Action Generators', () => {
     });
     
     test('startEditExpense() should edit expense in store and db', (done) => {
-      const store = createMockStore(expenses);
+      const store = createMockStore({
+        expenses,
+        auth: { uid },
+      });
       const update = {
         description: 'Expense description',
         amount: 96000,
@@ -172,7 +183,7 @@ describe('Expenses Action Generators', () => {
             update,
           });
   
-          return db.ref(`expenses/${expenses[0].id}`).once('value');
+          return db.ref(`users/${store.getState().auth.uid}/expenses/${expenses[0].id}`).once('value');
         }).then((snap) => {
           expect(snap.val()).toEqual({
             description: expenses[0].description,
@@ -199,7 +210,9 @@ describe('Expenses Action Generators', () => {
     });
     
     test('startSetExpenses() should fetch expenses from db', (done) => {
-      const store = createMockStore({});
+      const store = createMockStore({
+        auth: { uid },
+      });
       
       store.dispatch(startSetExpenses()).then(() => {
         const actions = store.getActions();

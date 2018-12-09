@@ -10,7 +10,7 @@ exports[`Header component should render correctly 1`] = `
       activeClassName="active"
       aria-current="page"
       exact={true}
-      to="/"
+      to="/dashboard"
     >
       Dashboard
     </NavLink>
@@ -21,6 +21,12 @@ exports[`Header component should render correctly 1`] = `
     >
       Create Expense
     </NavLink>
+    <button
+      name="btn-logout"
+      onClick={[MockFunction]}
+    >
+      Logout
+    </button>
   </nav>
 </header>
 `;
