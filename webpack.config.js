@@ -16,11 +16,13 @@ module.exports = {
   entry: './src/app.js',
   module: {
     rules: [
+      
       { // Babel
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+      
       { // CSS-SCSS-SASS
         test: /\.(s?[ac]ss)$/,
         exclude: /node_modules/,
@@ -28,6 +30,38 @@ module.exports = {
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           { loader: 'css-loader', options: { sourceMap: true } },
           { loader: 'sass-loader', options: { sourceMap: true } },
+        ],
+      },
+      
+      { // Image-loader
+        test: /\.(jpe?g|png|gif|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'images/[name].[ext]' },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65,
+              },
+              optipng: {
+                enabled: true,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              webp: {
+                quality: 75,
+              },
+            },
+          },
         ],
       },
     ],
@@ -58,6 +92,6 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'js/bundle.js',
   },
 };
